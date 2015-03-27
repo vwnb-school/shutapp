@@ -1,0 +1,27 @@
+<!-- Creates the navbar -->
+<nav class="navbar navbar-default navbar-inverse">
+
+  <!--The ol' squuezed box icon thing LOLOL-->
+  <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a class="navbar-brand" href="#">Koreshnet</a>
+
+  <div class="collapse navbar-collapse">
+    <form class="navbar-form navbar-right" action="login" method="post">
+      <div class="form-group">
+        <input type="text" placeholder="email" name="email" class="form-control">
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password" name="password" class="form-control">
+      </div>
+      <!-- S U B M I T -->
+      <button type="submit" class="btn btn-success">
+        <span>Sign in</span>
+      </button>
+      <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+    </form>
+  </div>
+</nav>
