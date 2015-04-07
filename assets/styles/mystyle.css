@@ -1,0 +1,82 @@
+html, body {
+  height: 100%; }
+
+body {
+  background: #c8c8c8;
+  overflow: scroll; }
+
+canvas #flowchart {
+  background: white; }
+
+#paper > svg {
+  background-color: #506677;
+  background-image: linear-gradient(#979797 2px, transparent 2px), linear-gradient(90deg, #979797 2px, transparent 2px), linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px; }
+
+.custom-menu {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid #CCC;
+  white-space: nowrap;
+  font-family: sans-serif;
+  background: #FFF;
+  color: #333;
+  border-radius: 5px;
+  padding: 0; }
+
+/* Each of the items in the list */
+.custom-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  list-style-type: none; }
+
+.custom-menu li:hover {
+  background-color: #DEF; }
+
+.navmenu {
+  padding-top: 50px; }
+
+.navbar {
+  display: block;
+  text-align: center; }
+
+.navbar-brand {
+  display: inline-block;
+  position: absolute;
+  float: none; }
+  @media screen and (max-width: 1215px) {
+    .navbar-brand {
+      display: none; } }
+
+.navbar-toggle {
+  position: absolute;
+  float: left;
+  margin-left: 15px; }
+
+.container {
+  max-width: 100%; }
+
+@media (min-width: 1px) {
+  .navbar-toggle {
+    display: block !important; } }
+#paper-container {
+  box-shadow: 0 0 10px rgba(111, 111, 111, 0.8) inset;
+  overflow: auto;
+  height: 70rem;
+  cursor: pointer;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab; }
+
+@media screen and (max-height: 50rem) {
+  #paper-container {
+    height: 50rem; } }
+@media screen and (max-width: 640px) {
+  #paper-container {
+    height: 100%;
+    width: 100%; } }
+
+/*# sourceMappingURL=mystyle.css.map */

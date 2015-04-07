@@ -18,11 +18,6 @@ var cssFilesToInject = [
   'styles/**/*.css'
 ];
 
-//Paperscript
-var paperFilesToInject = [
-  'paperscript/**/*.js'
-];
-
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
@@ -66,9 +61,6 @@ module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
 module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.paperFilesToInject = paperFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
 module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {

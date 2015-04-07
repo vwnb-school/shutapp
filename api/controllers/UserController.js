@@ -11,16 +11,13 @@ module.exports = {
   },
   update: function(req, res){
     if(req.session.user !== undefined) {
-      var newData = req.param('user');
-      
-      User.update({id: req.session.user}).exec(function(err, user){
-      
+      var newData = req.param('user');      
+        User.update({id: req.session.user}).exec(function(err, user){      
       })
     }
   },
   login: function (req, res) {
-    var bcrypt = require('bcryptjs');
-	console.log('Hi');
+    var bcrypt = require('bcryptjs');	
     User.findOneByEmail(req.param("email")).exec(function (err, user) {
       if (err) res.json({ error: 'DB error' }, 500);
 
@@ -93,24 +90,24 @@ module.exports = {
 	});
       },
       'encodingFailed': function(){        
-	User.create(params, function userCreated(err,user){
+	User.create(params).exec(function userCreated(err,user){
 	  if(err){
 		req.flash('err',err.ValidationError);
 		return res.redirect('/signup');
 	  }
-          res.location('/panel');
-	  return res.view('panel');
+	  req.session.user = user.id;
+    return res.redirect('/panel');
 	});
       },
       'success': function(imgUrl){
         params.avatar = imgUrl;
-	User.create(params, function userCreated(err,user){
+	User.create(params).exec(function userCreated(err,user){
 	  if(err){
-		req.flash('err',err.ValidationError);
-		return res.redirect('/signup');
+		  req.flash('err',err.ValidationError);
+		  return res.redirect('/signup');
 	  }
-	  res.location('/panel');
-	  return res.view('panel');
+    req.session.user = user.id;
+    return res.redirect('/panel');
 	});
       }
     });
