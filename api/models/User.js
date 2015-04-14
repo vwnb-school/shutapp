@@ -35,6 +35,11 @@ module.exports = {
     password: {
       type: "string",
       required: true
+    },
+	
+	admin: {
+      type: 'boolean',
+      defaultsTo: false
     }
   },
   beforeCreate: function (attrs, next) {
