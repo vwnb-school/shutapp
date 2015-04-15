@@ -42,6 +42,16 @@ module.exports = {
       defaultsTo: false
     }
   },
+  
+  followers: {
+    collection: 'User',
+    via: 'id'
+  },
+  
+  follows: {    
+    collection: 'User',
+    via: 'id'  
+  },
   beforeCreate: function (attrs, next) {
     var bcrypt = require('bcryptjs');
 
@@ -58,7 +68,6 @@ module.exports = {
         return next();
       });
     });
-
   }
 };
 

@@ -16,6 +16,24 @@ module.exports = {
       })
     }
   },
+  follow: function(req,res) {
+    /*
+    req: {
+     target: User(id associated with the post),
+     follow: User(id from the session)
+    }
+    */
+    User.update(req.params.all()).exec(function(err, updatedUser){
+      if(err) {
+        console.log("Cant follow this fucker:" +req.param('target'));
+        return res.json({'Error when following': err});
+      }
+      if(updatedUser) {
+        console.log(updatedUser.username+" is now following"+ req.params('target'));
+        return res.json('followSuccess': {updatedUser.target});
+      }
+    });
+  },
   login: function (req, res) {
     var bcrypt = require('bcryptjs');	
     User.findOneByEmail(req.param("email")).exec(function (err, user) {
