@@ -42,7 +42,6 @@ module.exports = {
       defaultsTo: false
     }
   },
-<<<<<<< HEAD
   
   followers: {
     collection: 'User',
@@ -53,8 +52,6 @@ module.exports = {
     collection: 'User',
     via: 'id'  
   },
-=======
->>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
   beforeCreate: function (attrs, next) {
     var bcrypt = require('bcryptjs');
 
@@ -71,14 +68,6 @@ module.exports = {
         return next();
       });
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
-=======
-
->>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
   }
 };
 
