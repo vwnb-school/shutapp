@@ -16,6 +16,7 @@ module.exports = {
       })
     }
   },
+<<<<<<< HEAD
   follow: function(req,res) {
     /*
     req: {
@@ -34,6 +35,8 @@ module.exports = {
       }
     });
   },
+=======
+>>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
   login: function (req, res) {
     var bcrypt = require('bcryptjs');	
     User.findOneByEmail(req.param("email")).exec(function (err, user) {

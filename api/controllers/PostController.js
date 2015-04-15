@@ -6,6 +6,7 @@
  */
 
 module.exports = {
+<<<<<<< HEAD
   post: function(req, res) {
     params = req.params.all();
     params.userID = req.session.user;
@@ -20,5 +21,8 @@ module.exports = {
     }
   },
   	
+=======
+	
+>>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
 };
 
