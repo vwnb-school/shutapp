@@ -68,6 +68,10 @@ module.exports = {
         return next();
       });
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> cce0101022a94b2ba2c1813ef570e67e133a21dd
   }
 };
 
