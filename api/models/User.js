@@ -36,22 +36,23 @@ module.exports = {
       type: "string",
       required: true
     },
-	
-	admin: {
-      type: 'boolean',
-      defaultsTo: false
+
+    admin: {
+        type: 'boolean',
+        defaultsTo: false
+    },
+
+    followers: {
+      collection: 'User',
+      via: 'following'
+    },
+
+    following: {
+      collection: 'User',
+      via: 'followers'
     }
   },
-  
-  followers: {
-    collection: 'User',
-    via: 'id'
-  },
-  
-  follows: {    
-    collection: 'User',
-    via: 'id'  
-  },
+
   beforeCreate: function (attrs, next) {
     var bcrypt = require('bcryptjs');
 

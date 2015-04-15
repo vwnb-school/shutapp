@@ -17,8 +17,7 @@ module.exports = {
       if(post) {
         //socket.publish(post)???? How the fuck does this work?!
       }
-    }
-  },
-  	
+    });
+  }
 };
 

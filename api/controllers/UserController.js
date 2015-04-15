@@ -11,31 +11,94 @@ module.exports = {
   },
   update: function(req, res){
     if(req.session.user !== undefined) {
-      var newData = req.param('user');      
-        User.update({id: req.session.user}).exec(function(err, user){      
+      var newData = req.param('user');
+        User.update({id: req.session.user}).exec(function(err, user){
       })
     }
   },
   follow: function(req,res) {
     /*
-    req: {
-     target: User(id associated with the post),
-     follow: User(id from the session)
+    This is a toggle action - if the association exists, it will be removed, else it will be added.
+    @params: {
+     follow: req.param('follow') -> User(id associated with the post),
+     follower: User(id from the session)
+    }
+    @res: {
+      success: {
+        target: User id of target,
+        you: User id of one who requested the follow
+      }
+      error: {
+        description: String description of error
+        details: Object: some object
+      }
     }
     */
-    User.update(req.params.all()).exec(function(err, updatedUser){
-      if(err) {
-        console.log("Cant follow this fucker:" +req.param('target'));
-        return res.json({'Error when following': err});
+    var error, success;
+    var params = {
+      follow: req.param('follow'),
+      follower: req.session.user
+    };
+    User.findOneById(params.follow).populate('followers').exec(function(err,target){
+      if(err){
+        console.log(err);
+        error = {
+          description: "Error finding or populating your target's follower list",
+          details: err
+        };
+        return res.json(error);
       }
-      if(updatedUser) {
-        console.log(updatedUser.username+" is now following"+ req.params('target'));
-        return res.json('followSuccess': {updatedUser.target});
+      if(target){
+        console.log(target.followers);
+        var exists = _.find(target.followers, function(follower){
+          return follower.id == params.follower;
+        });
+        if(exists){
+          target.followers.remove(params.follower);
+        } else {
+          target.followers.add(params.follower);
+        }
+        target.save(function(err, savedRecords){
+          if(err){
+            console.log(err);
+            error = {
+              description: "Error saving your target's follower list",
+              details: err
+            };
+            return res.json(error);
+          }
+          if(savedRecords){
+            User.findOneById(params.follower).exec(function(err, you){
+              success = {
+                target: {
+                  name: savedRecords.username,
+                  id: savedRecords.id,
+                  avatar: savedRecords.avatar
+                },
+                you: you
+              };
+              return res.json(success);
+            });
+          } else {
+            error = {
+              description: "Records could not be updated",
+              details: {requestedId: params.follow, target: target}
+            };
+            return res.json(error);
+          }
+        });
+      } else {
+        console.log(err);
+        error = {
+          description: "Error finding your target",
+          details: err
+        };
+        return res.json(error);
       }
     });
   },
   login: function (req, res) {
-    var bcrypt = require('bcryptjs');	
+    var bcrypt = require('bcryptjs');
     User.findOneByEmail(req.param("email")).exec(function (err, user) {
       if (err) res.json({ error: 'DB error' }, 500);
 
@@ -44,9 +107,9 @@ module.exports = {
           if (err) res.json({ error: 'Server error' }, 500);
 
           if (match) {
-            // password match			
+            // password match
             req.session.user = user.id;
-            return res.redirect('/panel');            
+            return res.redirect('/panel');
             /*res.view('panel',{
               username: user.username,
               email: user.email,
@@ -71,7 +134,7 @@ module.exports = {
     if(req.session.user !== undefined) {
       User.findOneById(req.session.user).exec(function(err, user){
         if (err) return res.negotiate(err);
-        
+
         if (user){
           delete user.password;
           return res.view('panel',user);
@@ -107,7 +170,7 @@ module.exports = {
 	  return res.view('panel');
 	});
       },
-      'encodingFailed': function(){        
+      'encodingFailed': function(){
 	User.create(params).exec(function userCreated(err,user){
 	  if(err){
 		req.flash('err',err.ValidationError);
