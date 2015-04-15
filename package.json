@@ -30,8 +30,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/e/shutapp.git"
+    "url": "git://github.com/anonymous node/sails user/shutapp.git"
   },
-  "author": "e",
+  "author": "anonymous node/sails user",
   "license": ""
 }

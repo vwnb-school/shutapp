@@ -31,11 +31,21 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
+  'GET /':{
+    view: 'index'
+  },
+  'GET /panel': {
+    controller: 'UserController',
+    action: 'displayPanel'
+  },
+  'POST /login': {
+    controller: 'UserController',
+    action: 'login'
+  },
+  'GET /signup':{
+    controller: 'UserController',
+    action: 'signup'
   }
-
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
