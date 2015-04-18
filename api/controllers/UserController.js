@@ -129,6 +129,9 @@ module.exports = {
 	});
       }
     });
+  },
+  follow: function(req, res){
+	return res.send("populate followers follows and followed's followers");
   }
 };
 

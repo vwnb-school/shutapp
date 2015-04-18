@@ -17,12 +17,11 @@ module.exports = {
 	  if(post){
 	    //list of socket methods: https://gist.github.com/mikermcneil/6598661
 		var io = sails.io;
+		//so essentially this should only emit to followers
 		io.sockets.emit('message', {content: params['content'] });
 		return res.redirect('panel');
 	  }
     });
-  }
- 
-  	
+  },
 };
 

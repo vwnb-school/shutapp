@@ -36,7 +36,7 @@ $(".submit_post").submit(function( event ) {
 });
 
 
-socket = io.connect();
+socket = io.connect({userid:"WENEEDAGETDAIDHER"});
  
 typeof console !== 'undefined' &&
 console.log('Connecting Socket.io to Sails.js...');
