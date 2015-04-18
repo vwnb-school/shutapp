@@ -30,7 +30,7 @@ module.exports = {
       }
       if(updatedUser) {
         console.log(updatedUser.username+" is now following"+ req.params('target'));
-        return res.json('followSuccess': {updatedUser.target});
+        return res.json({'followSuccess': updatedUser.target});
       }
     });
   },

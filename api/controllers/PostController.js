@@ -14,11 +14,15 @@ module.exports = {
         console.log(err);
         return res.negotiate(err);
       }
-      if(post) {
-        //socket.publish(post)???? How the fuck does this work?!
-      }
-    }
-  },
+	  if(post){
+	    //list of socket methods: https://gist.github.com/mikermcneil/6598661
+		var io = sails.io;
+		io.sockets.emit('message', {content: params['content'] });
+		return res.redirect('panel');
+	  }
+    });
+  }
+ 
   	
 };
 
