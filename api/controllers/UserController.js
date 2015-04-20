@@ -48,7 +48,6 @@ module.exports = {
         };
         return res.json(error);
       }
-<<<<<<< HEAD
       if(target){
         console.log(target.followers);
         var exists = _.find(target.followers, function(follower){
@@ -95,11 +94,6 @@ module.exports = {
           details: err
         };
         return res.json(error);
-=======
-      if(updatedUser) {
-        console.log(updatedUser.username+" is now following"+ req.params('target'));
-        return res.json({'followSuccess': updatedUser.target});
->>>>>>> e3d57f0d0d2e04f84247e13f8dc5ac45124585e0
       }
     });
   },
@@ -198,9 +192,6 @@ module.exports = {
 	});
       }
     });
-  },
-  follow: function(req, res){
-	return res.send("populate followers follows and followed's followers");
   }
 };
 
