@@ -18,7 +18,10 @@ module.exports = {
         //list of socket methods: https://gist.github.com/mikermcneil/6598661
         var io = sails.io;
         //so essentially this should only emit to followers
-        io.sockets.emit('message', {content: params['content'] });
+        io.sockets.emit('message', {
+          content: params['content'],
+          poster: params['userID']
+        });
         return res.redirect('panel');
       }
     });

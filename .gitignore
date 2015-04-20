@@ -117,3 +117,4 @@ nbproject
 .idea
 .node_history
 config/local.js.txt
+.remote-sync.json
