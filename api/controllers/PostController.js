@@ -18,10 +18,7 @@ module.exports = {
         //list of socket methods: https://gist.github.com/mikermcneil/6598661
         var io = sails.io;
         //so essentially this should only emit to followers
-        io.sockets.emit('message', {
-          content: params['content'],
-          poster: params['userID']
-        });
+        io.sockets.emit('message', post); //why limit? Just publish the whole post and use model attributes.
         return res.redirect('panel');
       }
     });

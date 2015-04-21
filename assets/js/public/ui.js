@@ -10,12 +10,11 @@ function toForm(selector) {
      "value ='"+value+"'>");
    }
 $(function(){
-/*  $('#username').on('click',function(){
-    var username = $('#name').text();
-    $('#name').remove();
-    $(".pagecontent").first().prepend("<form class='form-inline' id = 'update'><input type='text' id = 'name' placeholder='"+username+"'></form>");
-  });*/
-
+  $.get('/Post?sort=createdAt DESC', function (posts) {
+    _.each(posts, function(message){
+      showMessage(message);
+    });
+  });
 });
 
 
@@ -56,8 +55,11 @@ socket.on('connect', function socketConnected() {
 
     typeof console !== 'undefined' &&
     console.log('New message received from Sails ::\n', message);
-    $.get("/user/"+message.poster+"").done(function(user){
-      $(".messajizz").after("<comment class='panel'>"+message.content+" by "+user.username+"</comment><br>");
-    });
+    showMessage(message);
   });
 });
+function showMessage(message) { //get the user info and append the message. Modify as you want for proper UI.
+  $.get("/user/"+message.userID+"").done(function(user){ //get the poster's details
+    $(".messajizz").after("<div class='panel'><h4>"+message.content+" by "+user.username+"</h4><comment>At "+message.createdAt+"</comment><br></div>");
+  });
+}
