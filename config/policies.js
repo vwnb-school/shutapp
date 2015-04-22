@@ -28,7 +28,9 @@ module.exports.policies = {
 
   // '*': true,
   'Post.create': 'sessionAuth',
-  'User.update': 'ownOnly'
+  UserController: {
+	update: 'ownOnly'
+  }
 
   /***************************************************************************
   *                                                                          *
