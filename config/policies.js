@@ -30,11 +30,11 @@ module.exports.policies = {
   PostController: {
 	create: 'sessionAuth',
 	update: 'ownOnly',
-	destroy: 'ownOnly',
+	destroy: 'ownOnly'
   },
   UserController: {
-	update: 'ownOnly'
-	destroy: 'ownOnly',
+	update: 'ownOnly',
+	destroy: 'ownOnly'
   }
 
   /***************************************************************************
