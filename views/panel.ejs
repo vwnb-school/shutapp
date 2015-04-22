@@ -1,13 +1,14 @@
 <div class="pagecontent">
 
-<h3 id='name'><span><%- username %></span> <button class="btn btn-default" onclick="toForm('#name')">Change</button></h3>
-<p id='email' class='well'><span><%- email %></span><button class="btn btn-default" onclick="toForm('#email')">Change</button></p>
-<button class='btn btn-default' id='password'>Change password</button><br>
-<img src="<%- avatar %>" alt="Pootsiname's avatar"/><br>
-<button class='btn btn-default' id='edit'>Edit your details</button><br>
-<button class='btn btn-primary' id='save'>Save changes</button>
+<img src="<%- avatar %>" alt="Pootsiname's avatar"/>
+
+<h2 id="username" data-id='<%- id %>' class="form_cont"><span><%- username %></span> <button class="btn btn-default change" data-change="username">Change</button></h2>
+<p class='well form_cont'><span><%- email %></span><button class="btn btn-default change" data-change="email">Change</button></p>
+<p class='well form_cont'><span></span><button class="btn btn-default change" data-change="password">Change</button></p>
 
 
+
+<h3>Post something</h3>
 
 <form method="post" class="submit_post" action="/post/post">
 	<textarea name="content" class="form-control" >

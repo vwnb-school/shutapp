@@ -27,7 +27,8 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  'Post.create': 'sessionAuth'
+  'Post.create': 'sessionAuth',
+  'User.update': 'ownOnly'
 
   /***************************************************************************
   *                                                                          *
@@ -49,4 +50,5 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+	
 };
