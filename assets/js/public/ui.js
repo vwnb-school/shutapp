@@ -9,34 +9,17 @@ function toForm(selector) {
      "class = 'change' "+
      "value ='"+value+"'>");
    }
+
 $(function(){
-  $.get('/Post?sort=createdAt DESC', function (posts) {
-    _.each(posts, function(message){
-      showMessage(message);
-    });
-  });
+var socket = io.connect();
+$.get('/Post/fetch?filter=1', function (posts) {
+  var messageBlock = document.createElement('section');
+  for(var i=0; i<posts.length; i++){
+    console.log(posts[i]);
+    messageBlock.appendChild(createMessage(posts[i]));
+  }
+  $("#messajizz").append(messageBlock);
 });
-
-
-
-$(".submit_post").submit(function( event ) {
-
-  event.preventDefault();
-
-  $.ajax({
-	url : $(this).attr("action"),
-	type : 'POST',
-	data : $(this).serialize(),
-	success: function(data){
-
-	}
-  });
-  return false;
-});
-
-
-socket = io.connect({userid:"WENEEDAGETDAIDHER"});
-
 typeof console !== 'undefined' &&
 console.log('Connecting Socket.io to Sails.js...');
 
@@ -55,11 +38,35 @@ socket.on('connect', function socketConnected() {
 
     typeof console !== 'undefined' &&
     console.log('New message received from Sails ::\n', message);
-    showMessage(message);
+    createMessage(message);
   });
 });
-function showMessage(message) { //get the user info and append the message. Modify as you want for proper UI.
-  $.get("/user/"+message.userID+"").done(function(user){ //get the poster's details
-    $(".messajizz").after("<div class='panel'><h4>"+message.content+" by "+user.username+"</h4><comment>At "+message.createdAt+"</comment><br></div>");
+
+$(".submit_post").submit(function( event ) {
+
+  event.preventDefault();
+
+  $.ajax({
+	url : $(this).attr("action"),
+	type : 'POST',
+	data : $(this).serialize(),
+	success: function(data){
+
+	}
   });
+  return false;
+  });
+});
+
+//modify this one as you see fit, but for sake of consistency, plz make sure it returns a DOM element, but doesn't actually insert anything.
+function createMessage(message) { //get the user info and append the message. Modify as you want for proper UI.
+  var message = document.createElement("div");
+  message.setAttribute('class', 'panel');
+  var messageText = document.createElement("h4");
+  messageText.html = message.content+" by "+message.userID.username;
+  message.appendChild(messageText);
+  var messageFooter = document.createElement('comment'); //replace with whatever you like.
+  messageFooter.html = "At"+message.createdAt;
+  message.appendChild(messageFooter);
+  return message;
 }

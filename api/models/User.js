@@ -50,6 +50,11 @@ module.exports = {
     following: {
       collection: 'User',
       via: 'followers'
+    },
+
+    posts: {
+      collection: 'Post',
+      via: 'userID'
     }
   },
 
@@ -71,4 +76,3 @@ module.exports = {
     });
   }
 };
-
