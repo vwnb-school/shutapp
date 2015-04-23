@@ -10,7 +10,6 @@ function toForm(selector) {
      "class = 'change' "+
      "value ='"+value+"'>");
    }
-=======
 
 
 
@@ -62,8 +61,8 @@ $(function(){
 			el.hide();
 		});
 	});
-	
-		
+
+
 
 	socket = io.connect();
 
@@ -79,7 +78,7 @@ $(function(){
 		'e.g. to send a GET request to Sails via Socket.io, try: \n' +
 		'`socket.get("/foo", function (response) { console.log(response); })`'
 	  );
-	  
+
 	  $.get('/Post?sort=createdAt DESC', function (posts) {
 		_.each(posts, function(message){
 		  showMessage(message);
@@ -103,7 +102,7 @@ $(function(){
 	}
 
 
-  
+
 });
 
 
@@ -171,5 +170,4 @@ function createMessage(message) { //get the user info and append the message. Mo
   return message;
 }
 =======
-
 >>>>>>> 8198e67ecdff19cd5fa6e9b8ba7a365f0b6d876b

@@ -24,11 +24,11 @@
     "rc": "~0.5.0",
     "sails": "~0.11.0",
     "sails-disk": "~0.10.0",
-<<<<<<< HEAD
+
     "sails-hook-autoreload": "^0.11.5",
-=======
+
     "sails-mongo": "^0.10.6",
->>>>>>> 8198e67ecdff19cd5fa6e9b8ba7a365f0b6d876b
+
     "sails-mysql": "^0.10.11"
   },
   "scripts": {
