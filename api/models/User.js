@@ -7,9 +7,6 @@
 
 module.exports = {
 
-  schema: true,
-  connection: 'remoteSQL',
-
   attributes: {
 
     // The user's name or callsign

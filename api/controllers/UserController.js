@@ -9,13 +9,6 @@ module.exports = {
   signup: function(req,res){
     res.view('signup');
   },
-  update: function(req, res){
-    if(req.session.user !== undefined) {
-      var newData = req.param('user');
-        User.update({id: req.session.user}).exec(function(err, user){
-      })
-    }
-  },
   follow: function(req,res) {
     /*
     This is a toggle action - if the association exists, it will be removed, else it will be added.

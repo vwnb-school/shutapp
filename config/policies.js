@@ -27,7 +27,15 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
-  'Post.create': 'sessionAuth'
+  PostController: {
+	create: 'sessionAuth',
+	update: 'ownOnly',
+	destroy: 'ownOnly'
+  },
+  UserController: {
+	update: 'ownOnly',
+	destroy: 'ownOnly'
+  }
 
   /***************************************************************************
   *                                                                          *
@@ -49,4 +57,5 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+	
 };
