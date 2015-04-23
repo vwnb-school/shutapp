@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function toForm(selector) {
      var el = $(selector);
      var span = $(selector+">span").first();
@@ -106,8 +105,6 @@ $(function(){
 });
 
 
->>>>>>> 8198e67ecdff19cd5fa6e9b8ba7a365f0b6d876b
-
 $(function(){
 var socket = io.connect();
 $.get('/Post/fetch?filter=1', function (posts) {
@@ -118,7 +115,7 @@ $.get('/Post/fetch?filter=1', function (posts) {
   }
   $("#messajizz").append(messageBlock);
 });
-<<<<<<< HEAD
+
 typeof console !== 'undefined' &&
 console.log('Connecting Socket.io to Sails.js...');
 
@@ -169,5 +166,3 @@ function createMessage(message) { //get the user info and append the message. Mo
   message.appendChild(messageFooter);
   return message;
 }
-=======
->>>>>>> 8198e67ecdff19cd5fa6e9b8ba7a365f0b6d876b
