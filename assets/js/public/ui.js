@@ -34,7 +34,6 @@ $(function(){
 		var input = {};
 		input[key] = val;
 
-		//THIS NO WORK
 		$.ajax({
 			url: '/User/update/'+uid,
 			data: input,
