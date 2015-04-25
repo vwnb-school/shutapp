@@ -7,21 +7,26 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="#">Koreshnet</a>
 
   <div class="collapse navbar-collapse">
-    <form class="navbar-form navbar-right" action="login" method="post">
-      <div class="form-group">
-        <input type="text" placeholder="email" name="email" class="form-control">
-      </div>
-      <div class="form-group">
-        <input type="password" placeholder="Password" name="password" class="form-control">
-      </div>
-      <!-- S U B M I T -->
-      <button type="submit" class="btn btn-success">
-        <span>Sign in</span>
-      </button>
-      <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-    </form>
+    <% if (typeof req.session.user !== 'string') { %>
+      <form class="navbar-form navbar-right" action="login" method="post">
+        <div class="form-group">
+          <input type="text" placeholder="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" name="password" class="form-control">
+        </div>
+        <!-- S U B M I T -->
+        <button type="submit" class="btn btn-success">
+          <span>Sign in</span>
+        </button>
+        <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+      </form>
+    <% } else { %>
+      <a href="/" class="btn btn-success logout navbar-right">
+        <span>Logout</span>
+      </a>
+    <% } %>
   </div>
 </nav>
