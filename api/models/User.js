@@ -52,9 +52,16 @@ module.exports = {
     posts: {
       collection: 'Post',
       via: 'userID'
+    },
+
+    shutup: {
+      type: 'integer'
+    },
+
+    lastShutUp: {
+      type: 'datetime'
     }
   },
-
   beforeCreate: function (attrs, next) {
     var bcrypt = require('bcryptjs');
 

@@ -15,24 +15,26 @@ module.exports = {
         return res.negotiate(err);
       }
       if(post){
-        //list of socket methods: https://gist.github.com/mikermcneil/6598661
-        var io = sails.io;
-        //so essentially this should only emit to followers
-        io.sockets.emit('message', post);
-        //TODO: consider the following: if it's not too heavy on the server, the easiest way to do realtime message
-        //publishing is to create a room for every logged in user. Otherwise there will have to be some heavy
-        //client-side filtering to be done - fetching the following list and displaying only the messages by those
-        //users.
+        Post.publishCreate(post); //publish creation of the post. What a beautiful creation
+        /* this actually is a redundant step (sort of).
+        In the solution Ville found, they noted that there are 2 ways to do this:
+        1) lifecycle callbacks - afterPublishCreate one that I put in the Post model
+        2) Just do it here. In this function
+        The reason why I went with #1 is because this allows us greater flexibility at pretty much no
+        performance cost - we would still be publishing the Post publically, so if we ever want implement
+        some sort of realtime post counter (e.g. "There have been 666 new posts since last update, click this to go to hell"),
+        it would be easier because we wouldn't have to create any new sockets to that, just subscribe any client to posts
+        */
         return res.redirect('panel');
       }
     });
   },
-  /*
-  By default this one will fetch last 30 messages
-  If req.param('filter') is specified AND session.userID exists (i.e. logged in), it will
-  get the posts according to the follow list.
-  */
   fetch: function(req, res) {
+    /*
+    By default this one will fetch last 30 messages
+    If req.param('filter') is equal to true (GET /Post/fetch?filter=1) AND session.userID exists (i.e. logged in), it will
+    get the posts according to the follow list.
+    */
     if(req.param('filter') == true) {
       if(req.session.user){
         User.findOneById(req.session.user).populate('following').exec(function(err, user){//we get the logged in chap and populate his following list
@@ -40,7 +42,11 @@ module.exports = {
             var following = _.pluck(user.following,'id'); //make a list of follow target ids... don't ask
             Post.find().where({userID: following}).sort("createdAt DESC").populate('userID').exec(function(err, posts){ //find all posts by users from following list
               _.forEach(posts, function(post){
-                delete post.userID.password;
+                if(post.userID) {
+                  delete post.userID.password;
+                } else {
+                  post.userID = false;
+                }
               });
               return res.json(posts);
             });
@@ -58,7 +64,14 @@ module.exports = {
         });
       }
     } else {
-      Post.find().sort("createdAt DESC").exec(function(err, posts){ //find all posts by users from following list
+      Post.find().sort("createdAt DESC").populate('userID').exec(function(err, posts){
+        _.forEach(posts, function(post){
+          if(post.userID) {
+            delete post.userID.password;
+          } else {
+            post.userID = false;
+          }
+        });
         return res.json(posts);
       });
     }
