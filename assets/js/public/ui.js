@@ -13,7 +13,7 @@ function toForm(selector) {
 //modify this one as you see fit, but for sake of consistency, plz make sure it returns a DOM element, but doesn't actually insert anything.
 function createMessage(post) { //get the user info and append the message. Modify as you want for proper UI.
   var message = document.createElement("div");
-  message.setAttribute('class', 'panel highlight');
+  message.setAttribute('class', 'panel panel-default');
   var messageText = document.createElement("h4");
   messageText.innerHTML = post.content+" by " + post.userID.username || "Unknown entity";
   message.appendChild(messageText);
