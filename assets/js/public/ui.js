@@ -38,6 +38,7 @@ function createMessage(post) { //get the user info and append the message. Modif
     follow.setAttribute('class', 'follow');
     follow.innerHTML = "Follow";
 
+
     messageFooter.appendChild(follow);
     messageFooter.appendChild(shutup);
   }
