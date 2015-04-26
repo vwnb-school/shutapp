@@ -20,8 +20,10 @@ function createMessage(post) { //get the user info and append the message. Modif
 
   var messageFooter = document.createElement('footer'); //TODO: place controls into this footer thing
 
+  var formattedTime = $.format.date(post.createdAt, 'd/M/yyyy hh:mm:ss');
+
   var timestamp = document.createElement('comment');
-  timestamp.innerHTML = "At "+post.createdAt;
+  timestamp.innerHTML = "At "+formattedTime;
   if(post.userID.id){ //TODO: make this collapsible
     var shutup = document.createElement('button');
     shutup.innerHTML = "Shutup";
@@ -35,6 +37,7 @@ function createMessage(post) { //get the user info and append the message. Modif
 	//TODO: check if the user is a followed one and make this btn-success
     follow.setAttribute('class', 'follow btn');
     follow.innerHTML = "Follow";
+
 
     messageFooter.appendChild(follow);
     messageFooter.appendChild(shutup);

@@ -27,11 +27,12 @@ var jsFilesToInject = [
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/jquery-2.1.3.min.js',
+  'js/dependencies/jquery-dateFormat-min.js',
   'js/dependencies/underscore-min.js',
   'js/dependencies/angular.min.js',
+
   'js/dependencies/joint.js',
   'js/dependencies/**/*.js',
-
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order
