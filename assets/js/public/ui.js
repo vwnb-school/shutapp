@@ -15,14 +15,16 @@ function createMessage(post) { //get the user info and append the message. Modif
   var message = document.createElement("div");
   message.setAttribute('class', 'panel panel-default panel-body');
   var messageText = document.createElement("h4");
-  messageText.innerHTML = post.content+" by " + post.userID.username || "Unknown entity";
+  var messageUser = post.userID.username ? post.userID.username : "an unknown entity";
+  messageText.innerHTML = post.content+" by " + messageUser;
   message.appendChild(messageText);
 
   var messageFooter = document.createElement('footer'); //TODO: place controls into this footer thing
+  messageFooter.setAttribute('class', 'btn-toolbar');
 
   var formattedTime = $.format.date(post.createdAt, 'd/M/yyyy hh:mm:ss');
 
-  var timestamp = document.createElement('comment');
+  var timestamp = document.createElement('small');
   timestamp.innerHTML = "At "+formattedTime;
   if(post.userID.id){ //TODO: make this collapsible
     var shutup = document.createElement('button');
@@ -34,10 +36,9 @@ function createMessage(post) { //get the user info and append the message. Modif
     //so they know that if they click the button, they will unfollow that person.
     var follow = document.createElement('button');
     follow.setAttribute('data-target', post.userID.id);
-	//TODO: check if the user is a followed one and make this btn-success
-    follow.setAttribute('class', 'follow btn');
-    follow.innerHTML = "Follow";
-
+    var followClass = post.following ? 'btn-success' : '';
+    follow.setAttribute('class', 'follow btn '+followClass);
+    follow.innerHTML = post.following ? "Unfollow" : "Follow";
 
     messageFooter.appendChild(follow);
     messageFooter.appendChild(shutup);
@@ -50,13 +51,23 @@ function createMessage(post) { //get the user info and append the message. Modif
 //this one takes care of targeted user actions - sending follows and shutups.
 //takes string type action in first parameter and jQuery element reference in the second one (e.g. $(this))
 function userAction(action, element) {
-  var target = element.attr('data-target')
+  var target = element.attr("data-target");
+  var allButtons = $("button[data-target="+element.attr('data-target')+"].follow");
   switch(action) {
     case 'follow':
       $.get('/User/follow', {follow: target}).done(function(res){
         console.log(res);
         if(res.target){
-          element.addClass('btn-success');
+          switch(res.action){
+            case 0:
+              allButtons.removeClass('btn-success');
+              allButtons.html("Follow");
+            break;
+            case 1:
+              allButtons.addClass('btn-success');
+              allButtons.html("Unfollow");
+            break;
+          }
         }
       });
       break;
@@ -79,9 +90,9 @@ $(function(){
     var val = span.text();
     var formt = "";
     formt += '<div class="update">';
-    formt += '<input type="text" data-update="'+key+'" value="'+val+'">';
-    formt += '<button class="cancel">Cancel</button>';
-    formt += '<button class="update_submit">Save</button>';
+    formt += '<input type="text" class="form-control col-sm-3" data-update="'+key+'" value="'+val+'">';
+    formt += '<button class="cancel btn btn-default">Cancel</button>';
+    formt += '<button class="update_submit btn btn-primary">Save</button>';
     formt += '</div>';
 
     span.hide();
@@ -89,6 +100,12 @@ $(function(){
 
     el.append(formt);
   });
+  
+  $(document).on("click", ".cancel", function(){
+	$(this).closest(".form_cont").find("span, .change").show();
+    $(this).closest(".update").remove();
+  });
+
   $(document).on("click", ".update_submit", function(){
     var el = $(this).closest(".update");
     var topel = el.closest(".form_cont");
@@ -143,23 +160,22 @@ $(function(){
       'e.g. to send a GET request to Sails via Socket.io, try: \n' +
       '`socket.get("/foo", function (response) { console.log(response); })`');
     //populate the page with latest messages
-    if($('#messajizz').length){ //if on index
+	
+    if($('.messages.mess-general').length){ //if on index
       $.get('/Post/fetch', function (posts) {
         var messageBlock = document.createElement('section');
         for(var i=0; i<posts.length; i++){
-          messageBlock.appendChild(createMessage(posts[i]));
+          $(".messages").append(createMessage(posts[i]));
         }
-        $("#messajizz").after(messageBlock);
       });
     }
-    else if ($("#mymessajizz").length){ //if on panel
+    else if ($(".messages.mess-personal").length){ //if on panel
       //(this I call alkochecking. It's like checking pages properly with window.location, but alcoholically!)
       $.get('/Post/fetch?filter=1', function (posts) {
         var messageBlock = document.createElement('section');
         for(var i=0; i<posts.length; i++){
-          messageBlock.appendChild(createMessage(posts[i]));
+          $(".messages").append(createMessage(posts[i]));
         }
-        $("#mymessajizz").after(messageBlock);
       });
     }
     // Subscribe to your follow list (if there is anything) on page load.
@@ -169,7 +185,7 @@ $(function(){
     // Attach a listener which fires every time the server publishes a message:
     socket.on('message', function newMessageFromSails ( message ) {
       console.log('New message received from Sails ::\n', message);
-      $('#mymessajizz').after(createMessage(message));
+      $('.messages.mess-personal').prepend(createMessage(message));
     });
   });
 });

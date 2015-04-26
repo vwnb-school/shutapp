@@ -35,34 +35,56 @@ module.exports = {
     If req.param('filter') is equal to true (GET /Post/fetch?filter=1) AND session.userID exists (i.e. logged in), it will
     get the posts according to the follow list.
     */
-    if(req.param('filter') == true) {
-      if(req.session.user){
-        User.findOneById(req.session.user).populate('following').exec(function(err, user){//we get the logged in chap and populate his following list
-          if(user){
-            var following = _.pluck(user.following,'id'); //make a list of follow target ids... don't ask
-            Post.find().where({userID: following}).sort("createdAt DESC").populate('userID').exec(function(err, posts){ //find all posts by users from following list
-              _.forEach(posts, function(post){
-                if(post.userID) {
-                  delete post.userID.password;
-                } else {
-                  post.userID = false;
+
+    if(req.param('filter') == true && req.session.user) {
+      User.findOneById(req.session.user).populate('following').exec(function(err, user){//we get the logged in chap and populate his following list
+        if(user){
+          var following = _.pluck(user.following,'id'); //make a list of follow target ids... don't ask
+          Post.find().where({userID: following}).sort("createdAt DESC").populate('userID').exec(function(err, posts){ //find all posts by users from following list
+            _.forEach(posts, function(post){
+              if(post.userID) {
+                delete post.userID.password;
+              } else {
+                post.userID = false;
+              }
+              post.following = true; //if we're filtering then this will be true
+            });
+            return res.json(posts);
+          });
+        } else {
+          return res.json({
+            description: "Could not find you?",
+            details: req.params.all()
+          });
+        }
+      });
+    }else if(req.session.user){
+      User.findOneById(req.session.user).populate('following').exec(function(err, user){
+        if(user){
+          var following = _.pluck(user.following,'id');
+          Post.find().sort("createdAt DESC").populate('userID').exec(function(err, posts){
+            _.forEach(posts, function(post){
+              if(post.userID) {
+                delete post.userID.password;
+                if(following.indexOf(post.userID.id) != -1){ //in the index view, we need to know whether the post is by a followed dude
+                  post.following = true;
+                }else{
+                  post.following = false;
                 }
-              });
-              return res.json(posts);
+              } else {
+                post.userID = false;
+                post.following = false;
+              }
             });
-          } else {
-            return res.json({
-              description: "Could not find you?",
-              details: req.params.all()
-            });
-          }
-        });
-      } else {
-        return res.json({
-          description: "Error: you must be logged in to filter messages",
-          details: req.params.all()
-        });
-      }
+            return res.json(posts);
+          });
+        } else {
+          return res.json({
+            description: "Could not find you?",
+            details: req.params.all()
+          });
+        }
+      });
     } else {
       Post.find().sort("createdAt DESC").populate('userID').exec(function(err, posts){
         _.forEach(posts, function(post){
@@ -71,6 +93,7 @@ module.exports = {
           } else {
             post.userID = false;
           }
+          post.following = false;
         });
         return res.json(posts);
       });

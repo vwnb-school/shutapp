@@ -1,7 +1,66 @@
-.content{
+body{
   background:#efefef;
 }
 
 .center-column{
   float:none;
 }
+
+.messages .panel small, .pdetails button{
+  margin-left:5px;
+}
+
+.pdetails .form-control{
+	width:initial;
+}
+
+
+.custom-menu {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid #CCC;
+  white-space: nowrap;
+  font-family: sans-serif;
+  background: #FFF;
+  color: #333;
+  border-radius: 5px;
+  padding: 0; }
+
+/* Each of the items in the list */
+.custom-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  list-style-type: none; }
+
+.custom-menu li:hover {
+  background-color: #DEF; }
+
+.navmenu {
+  padding-top: 50px; }
+
+.navbar {
+  display: block;
+  text-align: center; }
+
+.navbar-brand {
+  display: inline-block;
+  position: absolute;
+  float: none; }
+  @media screen and (max-width: 1215px) {
+    .navbar-brand {
+      display: none; } }
+
+.navbar-toggle {
+  position: absolute;
+  float: left;
+  margin-left: 15px; }
+
+.container {
+  max-width: 100%; }
+
+
+.navbar-toggle {
+  display: block !important; }
+  

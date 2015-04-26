@@ -19,6 +19,8 @@ module.exports = {
             //the current user is following the post author
           }
           For now I dont send it. Up to you, how you want to handle this.
+          
+          Solved this in Post.fetch -Ville
         */
         User.subscribe(req.socket, user.following, ['update']); //Does this carry over across different pages?
         console.log('subscribed '+req.socket+' to update');
@@ -131,6 +133,7 @@ module.exports = {
                 },
                 you: you
               };
+              success["action"] = exists ? 0 : 1; //1 follow, 0 unfollow
               return res.json(success);
             });
           } else {
