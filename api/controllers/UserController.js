@@ -8,7 +8,6 @@ module.exports = {
     /*
     this one will just subscribe the logged in user to their follow list. The response messages explain it well enough.
     */
-    console.log('called');
     if(req.session.user){
       User.findOneById(req.session.user).populate('following').exec(function(err, user){
         //TODO: why populate? You might want to actually send this following list down to client

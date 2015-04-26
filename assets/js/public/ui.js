@@ -13,7 +13,7 @@ function toForm(selector) {
 //modify this one as you see fit, but for sake of consistency, plz make sure it returns a DOM element, but doesn't actually insert anything.
 function createMessage(post) { //get the user info and append the message. Modify as you want for proper UI.
   var message = document.createElement("div");
-  message.setAttribute('class', 'panel');
+  message.setAttribute('class', 'panel highlight');
   var messageText = document.createElement("h4");
   messageText.innerHTML = post.content+" by " + post.userID.username || "Unknown entity";
   message.appendChild(messageText);
@@ -26,14 +26,14 @@ function createMessage(post) { //get the user info and append the message. Modif
     var shutup = document.createElement('button');
     shutup.innerHTML = "Shutup";
     shutup.setAttribute('data-target', post.userID.id);
-    shutup.setAttribute('class', 'shutup');
-
+    shutup.setAttribute('class', 'shutup btn');
     //the idea is: when user expands the footer under message, the app should make a request
     //to see if the user follows the poster of this message. If they do, the follow button should indicate that
     //so they know that if they click the button, they will unfollow that person.
     var follow = document.createElement('button');
     follow.setAttribute('data-target', post.userID.id);
-    follow.setAttribute('class', 'follow');
+	//TODO: check if the user is a followed one and make this btn-success
+    follow.setAttribute('class', 'follow btn');
     follow.innerHTML = "Follow";
 
     messageFooter.appendChild(follow);
@@ -53,7 +53,7 @@ function userAction(action, element) {
       $.get('/User/follow', {follow: target}).done(function(res){
         console.log(res);
         if(res.target){
-          element.addClass('btn btn-success');
+          element.addClass('btn-success');
         }
       });
       break;
@@ -61,7 +61,7 @@ function userAction(action, element) {
       $.get('/User/shutup', {userID: target}).done(function(res){
         console.log(res);
         if(res.shutup){
-          element.addClass('btn btn-success');
+          element.addClass('btn-success');
         }
       });
       break;
@@ -140,7 +140,7 @@ $(function(){
       'e.g. to send a GET request to Sails via Socket.io, try: \n' +
       '`socket.get("/foo", function (response) { console.log(response); })`');
     //populate the page with latest messages
-    if($('#messajizz')){ //if on index
+    if($('#messajizz').length){ //if on index
       $.get('/Post/fetch', function (posts) {
         var messageBlock = document.createElement('section');
         for(var i=0; i<posts.length; i++){
@@ -149,7 +149,7 @@ $(function(){
         $("#messajizz").after(messageBlock);
       });
     }
-    else if ($("#mymessajizz")){ //if on panel
+    else if ($("#mymessajizz").length){ //if on panel
       //(this I call alkochecking. It's like checking pages properly with window.location, but alcoholically!)
       $.get('/Post/fetch?filter=1', function (posts) {
         var messageBlock = document.createElement('section');
