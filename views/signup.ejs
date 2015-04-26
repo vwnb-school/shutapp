@@ -1,4 +1,4 @@
-<section class="row text-center">
+<section class="row container-fluid">
  <%
       var flash = _.clone(req.flash('err'));
       if (flash.length > 0) { //Check for error existence
@@ -10,7 +10,7 @@
     <% }); %>
   </ul>
   <% } %>
-<form action="/user/create" method="post" class="form-signin col-xs-4 center-block" id="signupform">
+<form action="/user/create" method="post" class="center-column form-signin col-xs-4 center-block" id="signupform">
   <h2 class="form-signin-heading ">Create an account</h2>
 
   <div class="control-group">
