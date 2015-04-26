@@ -1,3 +1,5 @@
+/* FUNCTIONS */
+
 function toForm(selector) {
   var el = $(selector);
   var span = $(selector+">span").first();
@@ -36,7 +38,7 @@ function createMessage(post) { //get the user info and append the message. Modif
     //so they know that if they click the button, they will unfollow that person.
     var follow = document.createElement('button');
     follow.setAttribute('data-target', post.userID.id);
-    var followClass = post.following ? 'btn-success' : '';
+    var followClass = post.following ? 'btn-danger' : 'btn-success';
     follow.setAttribute('class', 'follow btn '+followClass);
     follow.innerHTML = post.following ? "Unfollow" : "Follow";
 
@@ -60,11 +62,13 @@ function userAction(action, element) {
         if(res.target){
           switch(res.action){
             case 0:
-              allButtons.removeClass('btn-success');
+              allButtons.addClass('btn-success');
+              allButtons.removeClass('btn-danger');
               allButtons.html("Follow");
             break;
             case 1:
-              allButtons.addClass('btn-success');
+              allButtons.addClass('btn-danger');
+              allButtons.removeClass('btn-success');
               allButtons.html("Unfollow");
             break;
           }
@@ -82,7 +86,12 @@ function userAction(action, element) {
   }
 }
 
+
+
+/* EVENTS ETC. */
+
 $(function(){
+
   $(document).on("click", ".change", function(){
     var el = $(this).closest(".form_cont");
     var key = $(this).attr("data-change");
@@ -130,8 +139,10 @@ $(function(){
       el.hide();
     });
   });
+  
   $(document).on('click', '.shutup', function() { userAction('shutup', $(this)); });
   $(document).on('click', '.follow', function() { userAction('follow', $(this)); });
+  
   $("a.logout").click(function(){
     $.get('User/logout');
   });
