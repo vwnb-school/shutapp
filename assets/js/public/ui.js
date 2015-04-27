@@ -76,7 +76,7 @@ function userAction(action, element) {
       });
       break;
     case 'shutup':
-      $.get('/User/shutup', {userID: target}).done(function(res){
+      $.get('/User/shutup', {'target': target}).done(function(res){
         console.log(res);
         if(res.shutup){
           element.addClass('btn-success');
@@ -109,7 +109,7 @@ $(function(){
 
     el.append(formt);
   });
-  
+
   $(document).on("click", ".cancel", function(){
 	$(this).closest(".form_cont").find("span, .change").show();
     $(this).closest(".update").remove();
@@ -139,10 +139,10 @@ $(function(){
       el.hide();
     });
   });
-  
+
   $(document).on('click', '.shutup', function() { userAction('shutup', $(this)); });
   $(document).on('click', '.follow', function() { userAction('follow', $(this)); });
-  
+
   $("a.logout").click(function(){
     $.get('User/logout');
   });
@@ -171,7 +171,7 @@ $(function(){
       'e.g. to send a GET request to Sails via Socket.io, try: \n' +
       '`socket.get("/foo", function (response) { console.log(response); })`');
     //populate the page with latest messages
-	
+
     if($('.messages.mess-general').length){ //if on index
       $.get('/Post/fetch', function (posts) {
         var messageBlock = document.createElement('section');

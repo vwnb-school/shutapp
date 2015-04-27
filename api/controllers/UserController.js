@@ -19,7 +19,7 @@ module.exports = {
             //the current user is following the post author
           }
           For now I dont send it. Up to you, how you want to handle this.
-          
+
           Solved this in Post.fetch -Ville
         */
         User.subscribe(req.socket, user.following, ['update']); //Does this carry over across different pages?
@@ -31,9 +31,9 @@ module.exports = {
     }
   },
   shutup: function (req, res) {
-    console.log('Shutup called on' + req.target);
+    console.log('Shutup called on ' + req.param('target'));
     /* @req: {
-        user: userID of post on which it's clicked
+        target: id of post's creator on which it's clicked
       }
       on success increments a shutup counter and emits a message to the target
       TODO: assign sessionAuth policy to this
@@ -41,10 +41,12 @@ module.exports = {
       For the timer policy when shutup is first executed, create a new session variable storing "you", "target" and date.now()
       For subsequent calls, if that session entry exists, check the timer and deny or allow the function to proceed.
     */
-    User.findOneById(req.param('userID')).exec(function (err, user) {
+    User.findOneById(req.param('target')).exec(function (err, user) {
       if (user) {
+        if (typeof user.shutup !== 'number') user.shutup = 0;
         user.shutup++;
-        user.lastShutUp = date.now(); //TODO: if we want to know how many 'shutups per hour' someone got, we need a policy that can track this.
+        user.lastShutUp = new Date() //TODO: if we want to know how many 'shutups per hour' someone got, we need a policy that can track this.
+        user.lastShutUp = user.lastShutUp.toISOString();
         //it is easy to do - upon recieving a shutup create a session variable for 'shutupsPerUnitTime' and increment it according
         //to whatever unit you want.
         user.save(function (err, saved) {

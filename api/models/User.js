@@ -7,6 +7,8 @@
 
 module.exports = {
 
+  schema: true,
+
   attributes: {
 
     // The user's name or callsign
@@ -55,7 +57,8 @@ module.exports = {
     },
 
     shutup: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
 
     lastShutUp: {
@@ -75,8 +78,13 @@ module.exports = {
       bcrypt.hash(attrs.password, salt, function (err, hash) {
         if (err) return next(err);
         attrs.password = hash;
-        return next();
       });
+      if (attrs.password == attrs.confirmation) {
+        delete attrs.confirmation;
+        return next();
+      } else {
+        return next("WROONG! Plz type the same password into confirmation field when signing up!");
+      }
     });
   }
 };
