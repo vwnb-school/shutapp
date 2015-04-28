@@ -10,18 +10,6 @@ module.exports = {
     */
     if(req.session.user){
       User.findOneById(req.session.user).populate('following').exec(function(err, user){
-        //TODO: why populate? You might want to actually send this following list down to client
-        // so that it can be used to faster check the following status of people under posts and style the
-        // follow/unfollow button accordingly.
-        // for example (assuming you send user.following array) in ui.js:
-        /*
-          if(_.contains(user.following[0].id,message.userID)){
-            //the current user is following the post author
-          }
-          For now I dont send it. Up to you, how you want to handle this.
-
-          Solved this in Post.fetch -Ville
-        */
         User.subscribe(req.socket, user.following, ['update']); //Does this carry over across different pages?
         console.log('subscribed '+req.socket+' to update');
         return res.json({success: 'Subscribed to personalized feed'});
