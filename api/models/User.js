@@ -66,25 +66,25 @@ module.exports = {
     }
   },
   beforeCreate: function (attrs, next) {
-    var bcrypt = require('bcryptjs');
-
-    bcrypt.genSalt(10, function (err, salt) {
-      if (err) return next(err);
-
-      bcrypt.hash(attrs.confirmation, salt, function (err, hash) {
-        if (err) return next(err);
-        attrs.confirmation = hash;
-      });
-      bcrypt.hash(attrs.password, salt, function (err, hash) {
-        if (err) return next(err);
-        attrs.password = hash;
-      });
-      if (attrs.password == attrs.confirmation) {
-        delete attrs.confirmation;
-        return next();
-      } else {
-        return next("WROONG! Plz type the same password into confirmation field when signing up!");
-      }
-    });
+    var sanitized = sanitizer.encryptPassword(attrs);
+    if(typeof sanitized.error !== 'undefined'){
+      return res.json(sanitized.error);
+    }
+    if(sanitized.password){
+      next();
+    } else {
+      return res.json({error: 'Unexpected error occured while creating user'})
+    }
+  },
+  beforeUpdate: function(attrs, next) {
+    var sanitized = sanitizer.encryptPassword(attrs);
+    if(typeof sanitized.error !== 'undefined'){
+      return res.json(sanitized.error);
+    }
+    if(sanitized.password){
+      next();
+    } else {
+      return res.json({error: 'Unexpected error occured while creating user'})
+    }
   }
 };

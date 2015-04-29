@@ -100,6 +100,7 @@ $(function(){
     var formt = "";
     formt += '<div class="update">';
     formt += '<input type="text" class="form-control col-sm-3" data-update="'+key+'" value="'+val+'">';
+    if (key == 'password') formt += '<input type="text" class="form-control col-sm-3" data-update="confirmation" value="confirm">';
     formt += '<button class="cancel btn btn-default">Cancel</button>';
     formt += '<button class="update_submit btn btn-primary">Save</button>';
     formt += '</div>';
@@ -120,14 +121,17 @@ $(function(){
     var topel = el.closest(".form_cont");
 
     var uid = $("#username").attr("data-id");
-    var key = el.find("input").attr("data-update");
-    var val = el.find("input").val();
-    var input = {};
-    input[key] = val;
+    var inputs = el.find("input");
+    var inputData = {};
+    inputs.each(function(){ //get EVERY active update form
+      var key = $(this).attr('data-update');
+      var val = $(this).val();
+      inputData[key] = val; //and serialize them all
+    });
 
     $.ajax({
       url: '/User/update/'+uid,
-      data: input,
+      data: inputData,
       type: 'PUT'
     }).done(function(data){
       console.log(data);
