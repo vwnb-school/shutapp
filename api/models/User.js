@@ -68,24 +68,24 @@ module.exports = {
   beforeCreate: function (attrs, next) {
     var sanitized = sanitizer.encryptPassword(attrs);
     if(typeof sanitized.error !== 'undefined'){
-      return res.json(sanitized.error);
+      return next(sanitized.error);
     }
     if(sanitized.password){
       next();
     } else {
-      return res.json({error: 'Unexpected error occured while creating user'})
+      return next({error: 'Unexpected error occured while creating user'})
     }
   },
-  beforeUpdate: function(attrs, next) {
-    if(typeof attrs.password !== 'undefined'){
+  beforeUpdate: function(attrs, next) {    
+    if(sails.updatingPassword){
       var sanitized = sanitizer.encryptPassword(attrs);
       if(typeof sanitized.error !== 'undefined'){
-        return res.json(sanitized.error);
+        return next(sanitized.error);
       }
       if(sanitized.password){
         next();
       } else {
-        return res.json({error: 'Unexpected error occured while creating user'})
+        return next({error: 'Unexpected error occured while creating user'})
       }
     } else {
       next();

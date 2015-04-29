@@ -33,7 +33,7 @@ module.exports.policies = {
     destroy: 'ownOnly'
   },
   UserController: {
-    update: 'ownOnly',
+    update: ['ownOnly','updateVerifier'],
     destroy: 'ownOnly',
     shutup: 'shutupTimer'
   }
