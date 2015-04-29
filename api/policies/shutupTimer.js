@@ -17,7 +17,7 @@ module.exports = function(req, res, next){
     if(shutup.targets.length == 0) return false;
     return stamp.target == req.param('target');
   }); //find the stamp if exists
-  console.log('policy timer lifecycle check - stamp: '+ stamp);
+  console.log('policy timer lifecycle check - stamp: '+ JSON.stringify(stamp));
   if(stamp){
     console.log('policy timer lifecycle check - stamp: running timer check');
     if ((Date.now() - (stamp.time)) > appConfig.shutupInterval*1000){
@@ -25,7 +25,7 @@ module.exports = function(req, res, next){
       stamp.time = Date.now();
     } else {
       var error = {
-        description: 'You already shit them up less than '+appConfig.shutupInterval+' seconds ago! Hold your hate.',
+        description: 'You already shut them up less than '+appConfig.shutupInterval+' seconds ago! Hold your hate.',
         details: req.param('target')
       };
       console.log('policy timer lifecycle check - timer too short: '+ stamp.target);
@@ -37,6 +37,6 @@ module.exports = function(req, res, next){
   }
 
   req.session.shutup = shutup;
-  console.log('policy timer lifecycle check - pociy passed: '+ req.session.shutup.you);
+  console.log('policy timer lifecycle check - policy passed: '+ req.session.shutup.you);
   next();
 };
