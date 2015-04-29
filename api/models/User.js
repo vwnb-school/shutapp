@@ -77,14 +77,18 @@ module.exports = {
     }
   },
   beforeUpdate: function(attrs, next) {
-    var sanitized = sanitizer.encryptPassword(attrs);
-    if(typeof sanitized.error !== 'undefined'){
-      return res.json(sanitized.error);
-    }
-    if(sanitized.password){
-      next();
+    if(typeof attrs.password !== 'undefined'){
+      var sanitized = sanitizer.encryptPassword(attrs);
+      if(typeof sanitized.error !== 'undefined'){
+        return res.json(sanitized.error);
+      }
+      if(sanitized.password){
+        next();
+      } else {
+        return res.json({error: 'Unexpected error occured while creating user'})
+      }
     } else {
-      return res.json({error: 'Unexpected error occured while creating user'})
+      next();
     }
   }
 };
