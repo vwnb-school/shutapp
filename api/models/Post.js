@@ -24,6 +24,8 @@ module.exports = {
       if(poster){
         post.userID = poster;
         var followers = User.subscribers(poster);
+        console.log(followers);
+
         sails.sockets.emit(followers, "message", post);
       } else {
         console.log(err || post.userID);

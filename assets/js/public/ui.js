@@ -163,6 +163,21 @@ $(function(){
       data : $(this).serialize(),
       success: function(data){
 
+        /*  var message = {
+            NSFW : false,
+            content : $(".submit_post textarea").text(),
+
+            id : $("#username").attr("data-id"),
+
+
+            userID :{
+              id : $("#username").attr("data-id"),
+              username : $("#username span")
+            }
+          }
+          createMessage(message);*/
+
+          $(".submit_post textarea").text("");
       }
     });
     return false;
