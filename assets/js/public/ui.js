@@ -99,7 +99,7 @@ $(function(){
     var val = span.text();
     var formt = "";
     formt += '<div class="update">';
-    formt += '<input type="text" class="form-control col-sm-3" data-update="'+key+'" value="'+val+'">';
+    formt += '<input type="text" class="form-control col-sm-3 passkey" data-update="'+key+'" value="'+val+'">';
     if (key == 'password') formt += '<input type="text" class="form-control col-sm-3" data-update="confirmation" value="confirm">';
     formt += '<button class="cancel btn btn-default">Cancel</button>';
     formt += '<button class="update_submit btn btn-primary">Save</button>';
@@ -123,6 +123,9 @@ $(function(){
     var uid = $("#username").attr("data-id");
     var inputs = el.find("input");
     var inputData = {};
+    if(topel.find(".passkey").length){
+      var mainKey = topel.find(".passkey").attr('data-update');
+    }
     inputs.each(function(){ //get EVERY active update form
       var key = $(this).attr('data-update');
       var val = $(this).val();
@@ -136,8 +139,10 @@ $(function(){
     }).done(function(data){
       console.log(data);
     }).always(function(data){
-      console.log("asd");
-      topel.find("span").text(data[key]);
+      console.log(mainKey);
+      if(mainKey){
+        topel.find("span").text(data[mainKey]);
+      }
       topel.find("span").show();
       topel.find(".change").show();
       el.hide();
