@@ -2,6 +2,44 @@ body{
   background:#efefef;
 }
 
+.navbar h2{
+  line-height: 1.6em;
+  color: #efefef;
+  margin: 0 0 0 3em;
+  width: 40%;
+  clear: left;
+  display: inline-block;
+  float: left;
+  text-align: left;
+}
+
+.oswald{
+  font-family: 'Oswald', sans-serif;
+  font-weight:700;
+}
+
+.introwow{
+  padding:4em 0 11em;
+  text-align:center;
+  background:url('../images/introwow.gif');
+  background-size:cover;
+  background-position:50% 70%;
+  margin:0 0 2em 0;
+}
+.introwow p{
+  font-size:3em;
+}
+.introwow h1{
+  font-size:5.5em;
+}
+.introwow a{
+  color:#333;
+}
+.introwow a>*{
+  font-weight:700;
+  margin:1em 1em 0;
+}
+
 .center-column{
   float:none;
 }

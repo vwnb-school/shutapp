@@ -1,5 +1,7 @@
 <!-- Creates the navbar -->
-<nav class="navbar navbar-default navbar-inverse">
+<nav class="navbar navbar-default navbar-inverse" <% if(req.url=="/"){ %> style="margin-bottom:0" <% } %> >
+
+  <h2 class="oswald">shutApp</h2>
 
   <!--The ol' squuezed box icon thing LOLOL-->
   <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
@@ -25,7 +27,7 @@
       </form>
     <% } else { %>
 	  <div class="navbar-form">
-		<a href="/user/logout"><button class="btn logout navbar-right">Logout</button></a>
+		<a href="/user/logout"><button class="btn btn-default logout navbar-right">Logout</button></a>
 	  </div>
     <% } %>
   </div>

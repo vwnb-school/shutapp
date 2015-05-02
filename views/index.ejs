@@ -1,6 +1,16 @@
-<div class="container-fluid">
 
-<h2>See them messages</h2>  
+<% if (typeof req.session.user !== 'string') { %>
+<div class="introwow oswald">
+<a href="/signup">
+<h1>The most important app of the era has arrived</h1>
+<p>Yoin now pleas</p>
+</a>
+</div>
+<div class="container-fluid">
+<% } else { %>
+<div class="container-fluid">
+<h2>All posts ever</h2>
+<% } %>
 <section class="messages mess-general">
 
 </section>

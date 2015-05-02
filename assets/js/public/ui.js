@@ -32,7 +32,7 @@ function createMessage(post) { //get the user info and append the message. Modif
     var shutup = document.createElement('button');
     shutup.innerHTML = "Shutup";
     shutup.setAttribute('data-target', post.userID.id);
-    shutup.setAttribute('class', 'shutup btn');
+    shutup.setAttribute('class', 'shutup btn btn-default');
     //the idea is: when user expands the footer under message, the app should make a request
     //to see if the user follows the poster of this message. If they do, the follow button should indicate that
     //so they know that if they click the button, they will unfollow that person.
