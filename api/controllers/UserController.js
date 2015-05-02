@@ -10,6 +10,7 @@ module.exports = {
     */
     if(req.session.user){
       User.findOneById(req.session.user).populate('following').exec(function(err, user){
+        user.following.push(user); //this is mostly for the user panel so we get our own stuff on submit
         User.subscribe(req.socket, user.following, ['update']); //Does this carry over across different pages?
         console.log('subscribed '+req.socket+' to update');
         return res.json({success: 'Subscribed to personalized feed'});

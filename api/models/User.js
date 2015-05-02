@@ -73,7 +73,7 @@ module.exports = {
     if(sanitized.password){
       next();
     } else {
-      return next({error: 'Unexpected error occured while creating user'})
+      return next({error: 'Unexpected error occured while creating user'});
     }
   },
   beforeUpdate: function(attrs, next) {    
@@ -85,7 +85,7 @@ module.exports = {
       if(sanitized.password){
         next();
       } else {
-        return next({error: 'Unexpected error occured while creating user'})
+        return next({error: 'Unexpected error occured while creating user'});
       }
     } else {
       next();
