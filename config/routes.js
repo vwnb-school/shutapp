@@ -49,6 +49,10 @@ module.exports.routes = {
   'GET /panel/:id':{
     controller: 'UserController',
     action: 'displayProfile'
+  },
+  'GET /post/fetch/:id':{
+    controller: 'PostController',
+    action: 'fetchById'
   }
   /***************************************************************************
   *                                                                          *

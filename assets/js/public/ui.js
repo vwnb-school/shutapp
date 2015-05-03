@@ -28,7 +28,7 @@ function createMessage(post) { //get the user info and append the message. Modif
 
   var timestamp = document.createElement('small');
   timestamp.innerHTML = "At "+formattedTime;
-  if(post.userID.id){ //TODO: make this collapsible
+  if(post.userID.id && $(".logout").length){ //TODO: make this collapsible
     var shutup = document.createElement('button');
     shutup.innerHTML = "Shutup";
     shutup.setAttribute('data-target', post.userID.id);
@@ -195,6 +195,15 @@ $(function(){
     else if ($(".messages.mess-personal").length){ //if on panel
       //(this I call alkochecking. It's like checking pages properly with window.location, but alcoholically!)
       $.get('/Post/fetch?filter=1', function (posts) {
+        var messageBlock = document.createElement('section');
+        for(var i=0; i<posts.length; i++){
+          $(".messages").append(createMessage(posts[i]));
+        }
+      });
+    }
+    else if ($(".messages.mess-profile").length){ //if in profile
+      var uid = $("#username").attr("data-id");
+      $.get('/Post/fetch/'+uid, function (posts) {
         var messageBlock = document.createElement('section');
         for(var i=0; i<posts.length; i++){
           $(".messages").append(createMessage(posts[i]));

@@ -40,6 +40,7 @@ module.exports = {
       User.findOneById(req.session.user).populate('following').exec(function(err, user){//we get the logged in chap and populate his following list
         if(user){
           var following = _.pluck(user.following,'id'); //make a list of follow target ids... don't ask
+          following.push(user);
           Post.find().where({userID: following}).sort("createdAt DESC").populate('userID').exec(function(err, posts){ //find all posts by users from following list
             _.forEach(posts, function(post){
               if(post.userID) {
@@ -87,6 +88,48 @@ module.exports = {
       });
     } else {
       Post.find().sort("createdAt DESC").populate('userID').exec(function(err, posts){
+        _.forEach(posts, function(post){
+          if(post.userID) {
+            delete post.userID.password;
+          } else {
+            post.userID = false;
+          }
+          post.following = false;
+        });
+        return res.json(posts);
+      });
+    }
+  },
+  fetchById: function(req,res){ //this is very redundant T________T
+    if(req.session.user){
+      User.findOneById(req.session.user).populate('following').exec(function(err, user){
+        if(user){
+          var following = _.pluck(user.following,'id');
+          Post.find().where({userID: req.params.id}).sort("createdAt DESC").populate('userID').exec(function(err, posts){
+            _.forEach(posts, function(post){
+              if(post.userID) {
+                delete post.userID.password;
+                if(following.indexOf(post.userID.id) != -1){ //in the index view, we need to know whether the post is by a followed dude
+                  post.following = true;
+                }else{
+                  post.following = false;
+                }
+              } else {
+                post.userID = false;
+                post.following = false;
+              }
+            });
+            return res.json(posts);
+          });
+        } else {
+          return res.json({
+            description: "Could not find you?",
+            details: req.params.all()
+          });
+        }
+      });
+    } else {
+      Post.find().where({userID: req.params.id}).sort("createdAt DESC").populate('userID').exec(function(err, posts){
         _.forEach(posts, function(post){
           if(post.userID) {
             delete post.userID.password;

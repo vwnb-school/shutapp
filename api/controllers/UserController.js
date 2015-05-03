@@ -193,7 +193,7 @@ module.exports = {
     }
   },
   displayProfile: function (req, res) {
-    if (req.params.id) {
+    if (req.params.id && req.params.id !== req.session.user) {
       User.findOneById(req.params.id).populate('following').exec(function (err, user) {
         //I pass the populated following list to panel for convenience - in case you want to quickly build a follow list there upon load
         if (err) return res.negotiate(err);
@@ -202,7 +202,9 @@ module.exports = {
           return res.view('profile', user);
         }
       });
-    } else {
+    } else if(req.params.id == req.session.user){
+      return res.redirect("panel");
+    } else{
       return res.send("I don't even know");
     }
   },
