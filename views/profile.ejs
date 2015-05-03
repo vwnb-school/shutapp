@@ -2,7 +2,13 @@
 
 <img src="<%- avatar %>" alt="Pootsiname's avatar"/>
 
-<h2 id="username" data-id='<%- id %>'><span><%- username %></span> <button data-target="<%- id %>" class="follow btn btn-success">Follow</button></h2>
+<h2 id="username" data-id='<%- id %>'><span><%- username %></span> 
+<% if(req.session.user && friend){ %>
+<button data-target="<%- id %>" class="follow btn btn-danger">Unfollow</button>
+<% } else if(req.session.user){ %>
+<button data-target="<%- id %>" class="follow btn btn-success">Follow</button>
+<% } %>
+</h2>
 <p class='well'><label>email: </label><span><%- email %></span></p>
 <p class='well'>
 <% if(following.length>0){ %>

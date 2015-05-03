@@ -194,11 +194,12 @@ module.exports = {
   },
   displayProfile: function (req, res) {
     if (req.params.id && req.params.id !== req.session.user) {
-      User.findOneById(req.params.id).populate('following').exec(function (err, user) {
+      User.findOneById(req.params.id).populate('following').populate('followers').exec(function (err, user) {
         //I pass the populated following list to panel for convenience - in case you want to quickly build a follow list there upon load
         if (err) return res.negotiate(err);
         if (user) {
           delete user.password;
+          user.friend = (_.where(user.followers, { 'id': req.session.user }).length > 0);
           return res.view('profile', user);
         }
       });

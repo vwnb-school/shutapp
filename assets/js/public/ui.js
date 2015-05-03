@@ -54,24 +54,12 @@ function createMessage(post) { //get the user info and append the message. Modif
 //takes string type action in first parameter and jQuery element reference in the second one (e.g. $(this))
 function userAction(action, element) {
   var target = element.attr("data-target");
-  var allButtons = $("button[data-target="+element.attr('data-target')+"].follow");
   switch(action) {
     case 'follow':
       $.get('/User/follow', {follow: target}).done(function(res){
         console.log(res);
         if(res.target){
-          switch(res.action){
-            case 0:
-              allButtons.addClass('btn-success');
-              allButtons.removeClass('btn-danger');
-              allButtons.html("Follow");
-            break;
-            case 1:
-              allButtons.addClass('btn-danger');
-              allButtons.removeClass('btn-success');
-              allButtons.html("Unfollow");
-            break;
-          }
+          updateFollowBtn(element.attr('data-target'), res.action);
         }
       });
       break;
@@ -85,8 +73,21 @@ function userAction(action, element) {
       break;
   }
 }
-
-
+function updateFollowBtn(target, action){
+  var allButtons = $("button[data-target="+target+"].follow");
+  switch(action){
+    case 0:
+      allButtons.addClass('btn-success');
+      allButtons.removeClass('btn-danger');
+      allButtons.html("Follow");
+    break;
+    case 1:
+      allButtons.addClass('btn-danger');
+      allButtons.removeClass('btn-success');
+      allButtons.html("Unfollow");
+    break;
+  }
+}
 
 /* EVENTS ETC. */
 
