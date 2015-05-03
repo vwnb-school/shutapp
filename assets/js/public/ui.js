@@ -18,7 +18,7 @@ function createMessage(post) { //get the user info and append the message. Modif
   message.setAttribute('class', 'panel panel-default panel-body');
   var messageText = document.createElement("h4");
   var messageUser = post.userID.username ? post.userID.username : "an unknown entity";
-  messageText.innerHTML = post.content+" by " + messageUser;
+  messageText.innerHTML = post.content+' by <a href="/panel/'+post.userID.id+'">' + messageUser +'</a>'; //i regret nothing
   message.appendChild(messageText);
 
   var messageFooter = document.createElement('footer'); //TODO: place controls into this footer thing
@@ -162,7 +162,10 @@ $(function(){
       type : 'POST',
       data : $(this).serialize(),
       success: function(data){
-          $(".submit_post textarea").val("");
+        $(".submit_post textarea").val("");
+      },
+      error: function(data){
+        alert("Failed to send message.");
       }
     });
     return false;

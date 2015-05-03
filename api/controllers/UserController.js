@@ -189,7 +189,21 @@ module.exports = {
         }
       });
     } else {
-      return res.send('NOT SESSION EEZ BAD!');
+      return res.redirect('/');
+    }
+  },
+  displayProfile: function (req, res) {
+    if (req.params.id) {
+      User.findOneById(req.params.id).populate('following').exec(function (err, user) {
+        //I pass the populated following list to panel for convenience - in case you want to quickly build a follow list there upon load
+        if (err) return res.negotiate(err);
+        if (user) {
+          delete user.password;
+          return res.view('profile', user);
+        }
+      });
+    } else {
+      return res.send("I don't even know");
     }
   },
   create: function (req, res, next) {

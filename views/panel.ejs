@@ -3,24 +3,32 @@
 <img src="<%- avatar %>" alt="Pootsiname's avatar"/>
 
 <h2 id="username" data-id='<%- id %>' class="form_cont"><span><%- username %></span> <button class="btn btn-default change" data-change="username">Change</button></h2>
-<p class='well form_cont'><span><%- email %></span><button class="btn btn-default change" data-change="email">Change</button></p>
-<p class='well form_cont'><span>Password</span><button class="btn btn-default change" data-change="password">Change</button></p>
+<p class='well form_cont'><label>email: </label><span><%- email %></span><button class="btn btn-default change" data-change="email">Change</button></p>
+<p class='well form_cont'><label>Password: </label><span>...</span><button class="btn btn-default change" data-change="password">Change</button></p>
+
+<p class='well'>
+<% if(following.length>0){ %>
+<label>stalks: </label>
+<% following.forEach(function(followee, idx){ %>
+<a href="/panel/<%= followee.id %>"><%= followee.username %></a><%= (idx+1<following.length) ? "," : "" %>
+<% }); }else{ %>
+Is a hermit.
+<% } %>
+</p>
 
 </div>
 
 <div class="container-fluid">
 
-<h3>Post something</h3>
+<h2 class="oswald">My feed</h2>
 
 <form method="post" class="submit_post" action="/post/post">
-	<textarea name="content" class="form-control" >
-	</textarea> <!--TODO: STRETCH GOAL - there is an easy-to-use markdown editor called MarkItUp. And there is an easy to use
+	<textarea name="content" class="form-control" placeholder="You can talk about anything, we're here for you" ></textarea> <!--TODO: STRETCH GOAL - there is an easy-to-use markdown editor called MarkItUp. And there is an easy to use
 	markdown npm package called Marked. I used both in my portfolio. If we have time we might want to implement this.-->
 	<input type="hidden" name="_csrf" value="<%= _csrf %>">
 	<input type="submit" class='btn btn-default' id='edit'>
 </form>
 
-<h2>My feed</h2>
 <section class="messages mess-personal">
 
 </section>

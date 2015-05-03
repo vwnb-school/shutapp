@@ -45,6 +45,10 @@ module.exports.routes = {
   'GET /signup':{
     controller: 'UserController',
     action: 'signup'
+  },
+  'GET /panel/:id':{
+    controller: 'UserController',
+    action: 'displayProfile'
   }
   /***************************************************************************
   *                                                                          *
