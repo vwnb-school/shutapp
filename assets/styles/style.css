@@ -1,12 +1,15 @@
+
+/* generic */ 
+
 body{
   background:#efefef;
 }
 
 .navbar h2{
-  line-height: 1.6em;
+  line-height: 1.7em;
   color: #efefef;
   margin: 0 0 0 3em;
-  width: 40%;
+  width: 5em;
   clear: left;
   display: inline-block;
   float: left;
@@ -17,6 +20,9 @@ body{
   font-family: 'Oswald', sans-serif;
   font-weight:700;
 }
+
+
+/* landing page */
 
 .introwow{
   padding:4em 0 11em;
@@ -29,7 +35,7 @@ body{
 .introwow p{
   font-size:3em;
 }
-.introwow h1{
+.introwow h2{
   font-size:5.5em;
 }
 .introwow a{
@@ -39,20 +45,34 @@ body{
   font-weight:700;
   margin:1em 1em 0;
 }
-
-.center-column{
-  float:none;
+@media screen and (max-width: 700px){
+  .introwow h2{ font-size:4em; }
+  .introwow p{ font-size:2em; }
 }
 
 
+/* a lone hack */
+
+.center-block{
+  max-width:30em;
+}
+
+
+/* Form related things*/
 
 .update{ display:inline-block; }
-.messages .panel small, .pdetails button{ margin-left:5px; }
+.messages .panel small, .pdetails button, .pdetails input{ margin-left:5px; }
 .pdetails .form-control{ width:initial; }
 
 .submit_post{ margin-bottom:1em; }
+.container-fluid .form-group input, .container-fluid .form-group textarea, .container-fluid .form-group button{ margin-bottom:5px; }
 
 
+label{ display:inline; }
+
+
+
+/* Offcanvas menu */
 
 .custom-menu {
   display: none;
@@ -103,7 +123,4 @@ body{
 .navbar-toggle {
   display: block !important; }
   
-  
-.form-control{ margin-bottom:5px; }
-label{ display:inline; }
 

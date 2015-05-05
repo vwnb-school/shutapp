@@ -23,10 +23,12 @@ Is a hermit.
 <h2 class="oswald">My feed</h2>
 
 <form method="post" class="submit_post" action="/post/post">
-	<textarea name="content" class="form-control" placeholder="You can talk about anything, we're here for you" ></textarea> <!--TODO: STRETCH GOAL - there is an easy-to-use markdown editor called MarkItUp. And there is an easy to use
-	markdown npm package called Marked. I used both in my portfolio. If we have time we might want to implement this.-->
-	<input type="hidden" name="_csrf" value="<%= _csrf %>">
-	<input type="submit" class='btn btn-default' id='edit'>
+  <div class="form-group">
+    <textarea name="content" class="form-control" placeholder="You can talk about anything, we're here for you" ></textarea> <!--TODO: STRETCH GOAL - there is an easy-to-use markdown editor called MarkItUp. And there is an easy to use
+    markdown npm package called Marked. I used both in my portfolio. If we have time we might want to implement this.-->
+    <input type="hidden" name="_csrf" value="<%= _csrf %>">
+    <input type="submit" class='btn btn-default' id='edit'>
+  </div>
 </form>
 
 <section class="messages mess-personal">

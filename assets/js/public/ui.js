@@ -99,11 +99,11 @@ $(function(){
     var span = el.find("span");
     var val = span.text();
     var formt = "";
-    formt += '<div class="update">';
-    formt += '<input type="text" class="form-control col-sm-3 passkey" data-update="'+key+'" value="'+val+'">';
-    if (key == 'password') formt += '<input type="text" class="form-control col-sm-3" data-update="confirmation" value="confirm">';
-    formt += '<button class="cancel btn btn-default">Cancel</button>';
-    formt += '<button class="update_submit btn btn-primary">Save</button>';
+    formt += '<div class="update navbar-form">';
+    formt += '<input type="text" class="form-control passkey" data-update="'+key+'" value="'+val+'">';
+    if (key == 'password') formt += '<input type="text" class="form-control" data-update="confirmation" value="confirm">';
+    formt += '<button class="cancel btn btn-default form-control">Cancel</button>';
+    formt += '<button class="update_submit btn btn-primary form-control">Save</button>';
     formt += '</div>';
 
     span.hide();

@@ -1,20 +1,29 @@
 <nav class="navmenu navmenu-default navmenu-fixed-left offcanvas-lg">
 
   <!--off-canvas login if you see this on mobile device-->
-  <form class="visible-xs-block panel-group">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" placeholder="Your email">
-    </div>
-    <div class="form-group">
-      <label for="pass">Password</label>
-      <input type="password" class="form-control" id="pass" placeholder="Password">
-    </div>
-  </form>
-
+  
+  <% if (typeof req.session.user !== 'string') { %>
+    <form class="visible-xs-block panel-group container-fluid">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="Your email">
+      </div>
+      <div class="form-group">
+        <label for="pass">Password</label>
+        <input type="password" class="form-control" id="pass" placeholder="Password">
+      </div>
+    </form>
+  <% } else { %>
+    <ul class="nav navmenu-nav">
+      <li><a href="/user/logout">Log out</a></li>
+     </ul>
+  <% } %>
+  
   <ul class="nav navmenu-nav">
     <li><a href="/signup">Sign up</a></li>
-    <li><a href="/panel">User panel</a></li>
-    <li><a href="/">Back to home page</a></li>
+    <% if (typeof req.session.user == 'string') { %>
+      <li><a href="/panel">User panel</a></li>
+    <% } %>
+    <li><a href="/">Home page</a></li>
   </ul>
 </nav>

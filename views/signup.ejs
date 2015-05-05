@@ -1,4 +1,4 @@
-<section class="row container-fluid">
+<section class="container-fluid">
  <%
       var flash = _.clone(req.flash('err'));
       if (flash.length > 0) { //Check for error existence
@@ -10,26 +10,20 @@
     <% }); %>
   </ul>
   <% } %>
-<form action="/user/create" method="post" class="center-column form-signin col-xs-4 center-block" id="signupform">
+<form action="/user/create" method="post" class="form-signin center-block" id="signupform">
   <h2 class="form-signin-heading ">Create an account</h2>
 
-  <div class="control-group">
+  <div class="form-group">
     <input type="text" class="form-control" placeholder="Your name" name="username">
-  </div>
-
-  <div class="control-group ">
     <input type="text" class="form-control" placeholder="Your email" name="email">
-  </div>
-
-  <div class="control-group ">
     <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-  </div>
-
-  <div class="control-group ">
     <input type="password" class="form-control" placeholder="Password confirmation" name="confirmation">
   </div>
-
+  
+  <div class="form-group ">
   <input type="submit" class="btn btn-lg btn-primary btn-block " value="Create account">
   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  </div>
+  
 </form>
 </section>
